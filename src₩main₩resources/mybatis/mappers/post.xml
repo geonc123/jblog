@@ -13,19 +13,20 @@
 </insert>
 
 <select id="selectByCateNo" parameterType="int" resultType="com.javaex.vo.PostVo">
-<![CDATA[
+	<![CDATA[
 
-select 	postTitle, 
-		postContent, 
-		regDate,
-		postNo,
-		cateNo
-from post where cateNo=#{cateNo}
-order by postNo
+		select 	postTitle, 
+			postContent, 
+			regDate,
+			postNo,
+			cateNo
+		from post where cateNo=#{cateNo}
+		order by postNo
 
-]]>
+	]]>
 </select>
 
+   
 <select id="selectPostTitle" parameterType="map" resultType="com.javaex.vo.PostVo">
 	<![CDATA[
 		select 	 postTitle,
@@ -34,6 +35,41 @@ order by postNo
 	]]>
 </select>
 
+<select id="selectPostPaging" parameterType="map" resultType="com.javaex.vo.PostVo">
+	<![CDATA[
+		select   B.rnum as rnum ,
+	         B.postno as postno, 
+    	     B.cateno as cateno , 
+ 	       	 B.regdate as regdate , 
+    	     B.posttitle as posttitle, 
+        	 B.postcontent as postcontent
+		from(
+   			 select   rownum as rnum, 
+        	      A.postno as postno ,
+          		  A.cateno as cateno, 
+          		  A.regdate as regdate , 
+         	      A.posttitle as posttitle , 
+          		  A.postcontent as postcontent
+   		     from (
+				SELECT 	 p.postno, 
+       					 p.cateno, 
+       					 p.regdate, 
+       					 p.posttitle, 
+       					 p.postcontent
+				FROM post p join category c
+				on p.cateno = c.cateno
+                where p.cateno = #{cateNo}
+				order by p.postno desc) A
+	  		 where rownum <= #{pageNo2} ) B
+		where B.rnum >= #{pageNo1}
+	]]>
+</select>
 
-                            
+<select id="countPost" parameterType="int" resultType="int">
+	<![CDATA[
+ 	   select count(cateno) from post where cateno= #{cateNo}
+	]]>
+</select>
+                
+            
 </mapper>

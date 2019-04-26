@@ -33,15 +33,18 @@ where cmtNo = #{cmtNo}
 ]]>
 </select>
 
-<select id="selectList"  parameterType="com.javaex.vo.CommentsVo">
+<select id="selectList"  parameterType="int" resultType="com.javaex.vo.CommentsVo">
 <![CDATA[
-
-select  cmtNo,
-        postNo,
-        userNo,
-        cmtContent,
-        regDate
-from comments 
+select  
+        u.username as userName,
+        c.cmtNo as cmtNo,
+        c.postNo as postNo,
+        c.userNo as userNo,
+        c.cmtContent as cmtContent,
+        c.regDate as regDate
+from comments c join users u 
+on u.userno = c.userno
+where postNo = #{postNo}
 order by cmtNo desc
 
 ]]>

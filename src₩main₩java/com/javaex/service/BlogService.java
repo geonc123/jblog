@@ -122,9 +122,26 @@ public class BlogService {
 		return commentsVo2;
 	}
 	
-	public List<CommentsVo> selectCommentsList(){
-		List<CommentsVo> list = commentsDao.selectList();
+	public List<CommentsVo> selectCommentsList(int postNo){
+		List<CommentsVo> list = commentsDao.selectList(postNo);
 		return list;
+	}
+	
+	public Map<String, Object> selectPostPaging(int cateNo , int pageNo){
+		int listSize = 3 ;
+		int pageNo1 = 1+listSize*(pageNo-1);
+		int pageNo2 = listSize*pageNo;
+		int countPage = postDao.countPost(cateNo);
+		int maxPage = (int)Math.ceil((double)countPage/listSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNo1", pageNo1);
+		map.put("pageNo2", pageNo2);
+		map.put("cateNo", cateNo);
+		List<PostVo> list = postDao.selectPaging(map);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("list", list);
+		map2.put("maxPage", maxPage);
+		return map2;
 	}
 	
 }

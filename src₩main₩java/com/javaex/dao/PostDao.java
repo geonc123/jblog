@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.CommentsVo;
 import com.javaex.vo.PostVo;
 
 @Repository
@@ -33,5 +34,16 @@ public class PostDao {
 	public List<PostVo> selectByPostContent(Map<String, Object> map){
 		List<PostVo> list = sqlSession.selectList("post.selectPostTitle", map);
 		return list;
+	}
+	
+	
+	public List<PostVo> selectPaging(Map<String, Object> map){
+		List<PostVo> list = sqlSession.selectList("post.selectPostPaging", map);
+		return list;
+	}
+	
+	public int countPost(int cateNo) {
+		int count = sqlSession.selectOne("post.countPost", cateNo);
+		return count;
 	}
 }

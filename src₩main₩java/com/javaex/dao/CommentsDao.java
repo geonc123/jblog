@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,9 @@ public class CommentsDao {
 		return commentsVo;
 	}
 	
-	public List<CommentsVo> selectList(){
-		List<CommentsVo> list = sqlSession.selectList("comments.selectList");
+	public List<CommentsVo> selectList(int postNo){
+		List<CommentsVo> list = sqlSession.selectList("comments.selectList", postNo);
 		return list;
 	}
+
 }

@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -111,8 +112,8 @@ public class blogController {
 	@ResponseBody
 	@RequestMapping(value = "/getcommentsbycmtno", method = RequestMethod.POST)
 	public CommentsVo getCommentsByCmtNo(@RequestParam("postNo") int postNo,
-										@RequestParam("userNo") int userNo,
-										@RequestParam("cmtContent") String cmtContent){
+										 @RequestParam("userNo") int userNo,
+										 @RequestParam("cmtContent") String cmtContent){
 		System.out.println("getCommentsByCmtNo start");
 		CommentsVo commentsVo = blogService.insertIntoComments(postNo, userNo, cmtContent);
 		return commentsVo;
@@ -120,10 +121,22 @@ public class blogController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/commentslist", method = RequestMethod.POST)
-	public List<CommentsVo> commentsList(){
+	public List<CommentsVo> commentsList(@RequestParam("postNo") int postNo){
 		System.out.println("commentsList start");
-		List<CommentsVo> list = blogService.selectCommentsList();
+		System.out.println(postNo);
+		List<CommentsVo> list = blogService.selectCommentsList(postNo);
+		System.out.println(list.toString());
 		return list;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/getlistpaging", method = RequestMethod.POST)
+	public Map<String, Object> getListPaging(@RequestParam("cateNo") int cateNo,
+											@RequestParam("pageNo") int pageNo){
+		System.out.println("get List Pagig");
+		System.out.println();
+		Map<String, Object> map = blogService.selectPostPaging(cateNo, pageNo);
+		return map;
+		
+	}
 }
