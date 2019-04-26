@@ -27,4 +27,19 @@ public class PostService {
 		List<CategoryVo> list = categoryDao.selectForPost();
 		return list;
 	}
+	
+	
+	public int insertPost2() {
+		PostVo postVo = new PostVo();
+		int count = 0 ;
+		for(int i =0 ; i <150; i ++) {
+			postVo.setCateNo(2);
+			postVo.setPostTitle(i+"번째 타이틀");
+			postVo.setPostContent(i+"번째 내용~");
+			 postDao.insert(postVo);
+			count ++ ;
+		}
+		
+		return count;
+	}
 }

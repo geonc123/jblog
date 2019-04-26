@@ -59,7 +59,7 @@
 				FROM post p join category c
 				on p.cateno = c.cateno
                 where p.cateno = #{cateNo}
-				order by p.postno desc) A
+				order by p.postno ) A
 	  		 where rownum <= #{pageNo2} ) B
 		where B.rnum >= #{pageNo1}
 	]]>

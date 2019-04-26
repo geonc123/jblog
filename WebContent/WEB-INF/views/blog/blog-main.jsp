@@ -109,36 +109,8 @@
 						var cateNo = no;
 						var pageNo = 1;
 						pagingAjax(1,cateNo);
-						str = "";
+						pageMove()
 
-						$.ajax({
-									url : "${pageContext.request.contextPath }/blog/postbycateno",
-									type : "post",
-									dataType : "json",
-									data : {
-										cateNo : cateNo
-									},
-									success : function(list) {
-										console.log(list);
-										if (list.length == 0) {
-											$("#blogList").html("등록된 게시글이 없습니다.");
-										} else {
-											for (var i = 0; i < list.length; i++) {
-												console.log(list.length);
-
-												str += "<li id=listno"+list[i].postNo+"  data-cateno="+list[i].cateNo+" data-postno="+list[i].postNo+" class='btn'>"
-												str += "<strong>"+list[i].postTitle+"</strong> "
-												str += "<span>"+list[i].regDate+"</span>"
-												str += "</li>"
-											}
-											$("#blogList").html(str);
-											str = "";
-										}
-									},
-									error : function(XHR, status, error) {
-										console.error(status + " : " + error);
-									}
-						});
 						as = "";
 
 						$.ajax({
@@ -191,6 +163,7 @@
 						console.log(cateNo);
 						
 						pagingAjax(1,cateNo);
+						pageMove()
 	});
 	
 	
@@ -224,6 +197,9 @@
 					as = "";
 					
 				}
+				
+				$("#commentsInput").hide();
+				$("#commentsList").hide();
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -240,6 +216,7 @@
 		console.log(cateNo);
 		var postNo = $this.data("postno");
 		console.log(postNo);
+		var user = '${sessionScope.authUser}';
 		as = "";
 		$.ajax({
 			url : "${pageContext.request.contextPath }/blog/postcontent",
@@ -263,11 +240,17 @@
 					}
 					$("#blogTitle").html(as);
 					as = "";
+					if(user != ''){
+						$("#commentsInput").show();
+					}
+					$("#commentsList").show();
 				}
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
+					
+			
 		});
 		var user = '${sessionScope.authUser}';
 		console.log(user);
@@ -313,6 +296,7 @@
 						vr += "</li>";
 					}
 					$("#commentsList").html(vr);
+					
 					vr="";
 			},
 			error : function(XHR, status, error) {
@@ -452,6 +436,10 @@
 				
 		$(".pager").html(pg);
 		
+	
+	}
+	
+	function pageMove(){
 		$(".pager").on("click","li",function(){
 			$this = $(this);
 			console.log($this);
