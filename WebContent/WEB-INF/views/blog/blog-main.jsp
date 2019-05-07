@@ -249,7 +249,45 @@
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
+			
+		});
+			$("#btn_insert").on("click",function(){
+				console.log("click me !!");
+				
+				var cmtContent = $("[name=commentscontext]").val();
+				console.log(cmtContent);
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath }/blog/insertincomments",
+					type : "post",
+					dataType : "json",
+					data : {
+						postNo : postNo,
+						userNo : userNo,
+						cmtContent : cmtContent
+					},
+					success : function(commentsVo) {
+						console.log(commentsVo);
+								vr = "" ;
+								vr += "<li>";
+								vr += "	<td>댓글</td>";
+								vr += "	<td>"+commentsVo.userName+"</td>";
+								vr += "	<td>"+commentsVo.cmtContent+"</td>";
+								vr += "	<td><span>"+commentsVo.regDate+"</span></td>";
+								vr += "</li>";
+							$("#commentsList").append(vr);
+							
+							vr="";
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
 					
+			});
+			
+			
+			
 			
 		});
 		var user = '${sessionScope.authUser}';
@@ -270,11 +308,9 @@
 			$("#commentsInput").html(aa);
 
 			aa="";
-			$("#btn_insert").on("click",function(){
-				console.log("click me !!");
-			});
+		
+		
 			
-		}
 		vr="";
 		$.ajax({
 			url : "${pageContext.request.contextPath }/blog/commentslist",
@@ -305,8 +341,17 @@
 		});
 		
 
-	})
+	};
 		
+	function commentsappend(){
+		vr2 = "";
+		vr2 += "<li>";
+		vr2 += "	<td>댓글</td>";
+		vr2 += "	<td>"+list[i].userName+"</td>";
+		vr2 += "	<td>"+list[i].cmtContent+"</td>";
+		vr2 += "	<td><span>"+list[i].regDate+"</span></td>";
+		vr2 += "</li>";
+	}
 	
 	
 	function render(cateVo) {

@@ -139,4 +139,14 @@ public class blogController {
 		return map;
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "insertincomments", method = RequestMethod.POST )
+	public CommentsVo insertInComments(	@RequestParam("postNo") int postNo,
+										@RequestParam("userNo") int userNo,
+										@RequestParam("cmtContent") String cmtContent) {
+		CommentsVo commentsVo = blogService.insertIntoComments(postNo, userNo, cmtContent);
+		return commentsVo;
+	}
+	
 }

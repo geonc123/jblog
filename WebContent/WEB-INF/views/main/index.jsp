@@ -23,7 +23,7 @@
 			</fieldset>
 			<fieldset>
 				<input type="radio" name="which" value="blog-title"> <label>블로그 제목</label>
-				<input type="radio" name="which" value="blog-user"> <label>블로거</label>
+				<input type="radio" name="which" value="blog-user"> <label>블로거 jenkins </label>
 			</fieldset>
 		</form>
 	</div>

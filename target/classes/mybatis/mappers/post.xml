@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+
+<insert id="insertpost" parameterType="com.javaex.vo.PostVo">
+	<![CDATA[
+		insert into post values (   Seq_post_No.Nextval,
+									#{cateNo},
+									#{postTitle},
+									#{postContent}, 
+									sysdate)
+	]]>
+</insert>
+
+<select id="selectByCateNo" parameterType="int" resultType="com.javaex.vo.PostVo">
+	<![CDATA[
+
+		select 	postTitle, 
+			postContent, 
+			regDate,
+			postNo,
+			cateNo
+		from post where cateNo=#{cateNo}
+		order by postNo
+
+	]]>
+</select>
+
+   
+<select id="selectPostTitle" parameterType="map" resultType="com.javaex.vo.PostVo">
+	<![CDATA[
+		select 	 postTitle,
+				 postContent 
+		from post where cateNo = #{cateNo} and postNo = #{postNo}
+	]]>
+</select>
+
+<select id="selectPostPaging" parameterType="map" resultType="com.javaex.vo.PostVo">
+	<![CDATA[
+		select   B.rnum as rnum ,
+	         B.postno as postno, 
+    	     B.cateno as cateno , 
+ 	       	 B.regdate as regdate , 
+    	     B.posttitle as posttitle, 
+        	 B.postcontent as postcontent
+		from(
+   			 select   rownum as rnum, 
+        	      A.postno as postno ,
+          		  A.cateno as cateno, 
+          		  A.regdate as regdate , 
+         	      A.posttitle as posttitle , 
+          		  A.postcontent as postcontent
+   		     from (
+				SELECT 	 p.postno, 
+       					 p.cateno, 
+       					 p.regdate, 
+       					 p.posttitle, 
+       					 p.postcontent
+				FROM post p join category c
+				on p.cateno = c.cateno
+                where p.cateno = #{cateNo}
+				order by p.postno ) A
+	  		 where rownum <= #{pageNo2} ) B
+		where B.rnum >= #{pageNo1}
+	]]>
+</select>
+
+<select id="countPost" parameterType="int" resultType="int">
+	<![CDATA[
+ 	   select count(cateno) from post where cateno= #{cateNo}
+	]]>
+</select>
+                
+            
+</mapper>

@@ -61,7 +61,7 @@
 	
 	<!-- url매핑 -->
 
-	<mvc:resources mapping="/upload/**" location="file:/Users/thisisspear/Desktop/upload/" />
+	<mvc:resources mapping="/upload/**" location="file:/home/spear/Desktop/Parallels Shared Folders/Home/Downloads/advanced java/sample/" />
 	
 	<mvc:interceptors>
 		<mvc:interceptor>

@@ -36,7 +36,7 @@ public class BlogService {
 	
 	
 	public String restore(MultipartFile file, String id, String blogTitle) {
-		String saveDir = "/Users/thisisspear/Desktop/upload";
+		String saveDir = "/home/spear/Desktop/Parallels Shared Folders/Home/Downloads/advanced java/sample";
 
 		// oreginame filename
 		String orgName = file.getOriginalFilename();
