@@ -19,31 +19,33 @@ includes Mysql (Unimplemented)
 ### Not Found Data Exception 
 Just throw an exception when data cannot be found
 
+BlogNotFoundAdvice.class
 [source, java]
 ---
 
-public class BlogNotFoundAdvice {
+	public class BlogNotFoundAdvice {
 
-	@ResponseBody
-	@ExceptionHandler(BlogNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String blogNotFoundHandler(BlogNotFoundException exception) {
-		return exception.getMessage();
+		@ResponseBody
+		@ExceptionHandler(BlogNotFoundException.class)
+		@ResponseStatus(HttpStatus.NOT_FOUND)
+		String blogNotFoundHandler(BlogNotFoundException exception) {
+			return exception.getMessage();
+		}
 	}
-}
 
 ---
 
+BlogNotFoundException.class
 [source, java]
 ---
 
-public class BlogNotFoundException extends RuntimeException {
-	
-	public BlogNotFoundException(Long id){
-		super("Could not find Blog" + id);
+	public class BlogNotFoundException extends RuntimeException {
+
+		public BlogNotFoundException(Long id){
+			super("Could not find Blog" + id);
+		}
+
 	}
-	
-}
 
 ---
 
