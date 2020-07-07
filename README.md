@@ -21,6 +21,7 @@ Just throw an exception when data cannot be found
 
 [source, java]
 ---
+
 public class BlogNotFoundAdvice {
 
 	@ResponseBody
@@ -30,10 +31,12 @@ public class BlogNotFoundAdvice {
 		return exception.getMessage();
 	}
 }
+
 ---
 
 [source, java]
 ---
+
 public class BlogNotFoundException extends RuntimeException {
 	
 	public BlogNotFoundException(Long id){
@@ -41,6 +44,8 @@ public class BlogNotFoundException extends RuntimeException {
 	}
 	
 }
+
 ---
+
 ## Web Security and OAuth2 (Unimplemented)
 
